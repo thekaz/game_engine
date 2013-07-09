@@ -10,16 +10,14 @@ function ClassCanvasWrapper (options) {
 	this.platforms = [];
 	this.player = null;
 	/*
-	this.canvasElement.addEventListener('tick_tock', function(e) {
-		this.runTickTock();
-	}.bind(this));
+	this.canvasElement.addEventListener('tick_tock', this.runTickTock.bind(this));
 	*/
 }
 
 ClassCanvasWrapper.prototype = {
 	canvasRefresh: function() {	
 		this.ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
-		for (i=0; i < this.platforms.length; i++) {
+		for (var i=0; i < this.platforms.length; i++) {
 			this.redrawObject(this.platforms[i]);
 		}
 		this.redrawObject(this.player);
@@ -27,7 +25,7 @@ ClassCanvasWrapper.prototype = {
 	runOnTickTock: function() {
 		// for gravity
 		if (this.player) {
-			this.player.fall();
+			this.player.fall(this.platforms);
 		}
 		this.canvasRefresh();
 	},

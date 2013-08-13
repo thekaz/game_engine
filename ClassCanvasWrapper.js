@@ -4,7 +4,8 @@ function ClassCanvasWrapper (options) {
 	this.ctx = this.canvasElement.getContext('2d');
 	this.timer = new ClassTimer({
 		'canvasId':canvasId,
-		'runCallback':this.runOnTickTock.bind(this)
+		'runCallback':this.runOnTickTock.bind(this),
+		fps:30
 	});
 	this.timer.start();
 	this.platforms = [];
@@ -25,7 +26,9 @@ ClassCanvasWrapper.prototype = {
 	runOnTickTock: function() {
 		// for gravity
 		if (this.player) {
+			this.player.jump();
 			this.player.fall(this.platforms);
+			this.player.goHoriz();
 		}
 		this.canvasRefresh();
 	},

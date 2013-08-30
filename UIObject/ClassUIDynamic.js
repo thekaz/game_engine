@@ -12,7 +12,7 @@ ClassUIDynamic.prototype.init = function(options) {
 	this.ax = options.ax || 2;
 	this.ay = options.ay || 1;
 	
-	this.terminalX = options.terminalX || 10;
+	this.terminalX = options.terminalX || 5;
 	this.terminalY = options.terminalY || 100;
 	
 	this.frictionX = options.frictionX || 0;

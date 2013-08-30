@@ -7,12 +7,25 @@ ClassCanvasWrapper.prototype = {
 		var canvasId = options.canvasId;
 		this.canvasElement = document.getElementById(canvasId);
 		this.ctx = this.canvasElement.getContext('2d');
-		this.timer = new ClassTimer({
-			'canvasId':canvasId,
-			'runCallback':this.runOnTickTock.bind(this),
-			fps:30
-		});
-		this.timer.start();
+		if ('debug' in options) {
+			top.addEventListener("keydown", function (event) {
+				if (!event) {
+					event = window.event
+				}
+				var code = event.keyCode;
+				if (code == 32) {
+					this.runOnTickTock();
+					event.preventDefault();
+				}
+			}.bind(this));
+		} else {
+			this.timer = new ClassTimer({
+				'canvasId':canvasId,
+				'runCallback':this.runOnTickTock.bind(this),
+				fps:30
+			});
+			this.timer.start();
+		}
 		this.platforms = [];
 		this.player = null;
 		this.keyboardManager = new ClassKeyboardManager();
@@ -40,9 +53,10 @@ ClassCanvasWrapper.prototype = {
 			} else {
 				this.player.setHorizDirection(0);
 			}
-			this.player.jump();
-			this.player.fall(this.platforms);
-			this.player.goHoriz();
+			this.player.move(this.platforms);
+			//this.player.jump();
+			//this.player.fall(this.platforms);
+			//this.player.goHoriz();
 		}
 		this.canvasRefresh();
 	},

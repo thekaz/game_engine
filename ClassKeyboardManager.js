@@ -10,6 +10,9 @@ ClassKeyboardManager.prototype = {
 			39:"right",
 			40:"down"
 		};
+		this.defaultExemptions = {
+			116: true
+		};
 		this.keyPressMap = {};
 		this.registerKeyDown();
 		this.registerKeyUp();
@@ -20,6 +23,9 @@ ClassKeyboardManager.prototype = {
 				event = window.event
 			}
 			var code = event.keyCode;
+			if (!(code in this.defaultExemptions)) {
+				event.preventDefault();
+			}
 			if (event.charCode && code == 0) {
 				code = event.charCode;
 			}
@@ -34,6 +40,7 @@ ClassKeyboardManager.prototype = {
 			if (!event) {
 				event = window.event
 			}
+			event.preventDefault();
 			var code = event.keyCode;
 			if (event.charCode && code == 0) {
 				code = event.charCode;

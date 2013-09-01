@@ -1,5 +1,4 @@
 function ClassTimer (options) {
-	this.canvasElement = document.getElementById(options.canvasId);
 	var eventName = 'tick_tock';
 	this.event = new CustomEvent(eventName);
 	this.event.initEvent(eventName, false, false);
@@ -22,7 +21,6 @@ ClassTimer.prototype = {
 		this.timeInit += this.timeInterval;
 		this.timer = setTimeout (
 			function (){
-				//this.canvasElement.dispatchEvent(this.event);
 				this.runCallback();
 				this.run();
 			}.bind(this),

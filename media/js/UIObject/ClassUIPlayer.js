@@ -5,6 +5,18 @@ function ClassUIPlayer (options) {
 ClassUIPlayer.prototype = Object.create(ClassUIDynamic.prototype);
 
 ClassUIPlayer.prototype.init = function(options) {
+	if (!options.width) {
+		options.width = 10;
+	}
+	if (!options.height) {
+		options.height = 10;
+	}
+	if (!options.color) {
+		options.color = "#00FF00";
+	}
+	if (!options.frictionX) {
+		options.frictionX = 2;
+	}
 	ClassUIDynamic.prototype.init.call(this, options);
 	this.horizDirection = 0;
 	this.jumpState = false;

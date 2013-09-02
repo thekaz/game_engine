@@ -1,5 +1,9 @@
 window.addEventListener("load", function () {
 	var maker = new ClassMakerWrapper({'canvasId':'the_game',
+		'canvas_up_button':document.getElementById("canvas_up"),
+		'canvas_down_button':document.getElementById("canvas_down"),
+		'canvas_left_button':document.getElementById("canvas_left"),
+		'canvas_right_button':document.getElementById("canvas_right"),
 		'add_player_button':document.getElementById("add_player"),
 		'add_horiz_platform_button':document.getElementById("add_horiz_platform"),
 		'add_verti_platform_button':document.getElementById("add_verti_platform"),

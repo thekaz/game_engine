@@ -2,6 +2,8 @@ var http = require('http');
 var queryString = require('querystring');
 var fileSystem = require('fs');
 
+require('daemon')();
+
 http.createServer(function (req, res) {
 	if (req.method == 'GET') {
 		fileSystem.readFile("/usr/local/web/game_engine/save/save.json", function(err, data) {

@@ -105,7 +105,7 @@ ClassUIPlayer.prototype.jump = function() {
 	}
 	if (this.jumpState) {
 		this.landed = false;
-		this.vy = -10;
+		this.vy = -12;
 		this.jumpState = false;
 	}
 };

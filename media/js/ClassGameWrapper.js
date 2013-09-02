@@ -24,6 +24,8 @@ ClassGameWrapper.prototype = {
 
 		this.keyboardManager = new ClassKeyboardManager();
 		this.canvas = new ClassCanvasWrapper(options);
+		this.xThresh = Math.floor(this.canvas.getWidth()/3);
+		this.yThresh = Math.floor(this.canvas.getHeight()/3);
 		this.platforms = [];
 		this.player = undefined;
 
@@ -70,6 +72,26 @@ ClassGameWrapper.prototype = {
 			this.player.setHorizDirection(0);
 		}
 		this.player.move(this.platforms);
+
+		// check to see if the player is near the edge of the screen.  if she/he is, scroll the screen
+
+		// left side of screen
+		if (this.player.getX() < this.canvas.getX() + this.xThresh) {
+			this.canvas.setX(this.player.getX() - this.xThresh);
+		}
+		// right side of screen
+		if (this.player.getX() + this.player.getWidth() > this.canvas.getX() + this.canvas.getWidth() - this.xThresh) {
+			this.canvas.setX(this.player.getX() + this.xThresh);
+		}
+		// top of screen
+		if (this.player.getY() < this.canvas.getY() + this.yThresh) {
+			this.canvas.setY(this.player.getY() - this.yThresh);
+		}
+		// bottom of screen
+		if (this.player.getY() + this.player.getHeight() > this.canvas.getY() + this.canvas.getHeight() - this.yThresh) {
+			this.canvas.setY(this.player.getY() + this.yThresh);
+		}
+
 		this.canvas.canvasRefresh([this.platforms], [this.player]);
 	},
 	addPlatform: function(uiObject) {

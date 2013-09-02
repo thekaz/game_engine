@@ -19,6 +19,8 @@ ClassMakerWrapper.prototype = {
 		this.cursorObj = undefined;
 		options.setMouseCallback = this.setMouseCallback.bind(this);
 		this.canvas = new ClassCanvasWrapper(options);
+		this.canvas.setXStep(Math.floor(this.canvas.getWidth()/10));
+		this.canvas.setYStep(Math.floor(this.canvas.getHeight()/10));
 		this.playerButton = options.add_player_button;
 		this.horizPlatformButton = options.add_horiz_platform_button;
 		this.vertiPlatformButton = options.add_verti_platform_button;
@@ -29,12 +31,35 @@ ClassMakerWrapper.prototype = {
 		this.saveButton = options.save_button;
 		this.loadButton = options.load_button;
 
+		this.canvasUpButton = options.canvas_up_button;
+		this.canvasDownButton = options.canvas_down_button;
+		this.canvasLeftButton = options.canvas_left_button;
+		this.canvasRightButton = options.canvas_right_button;
+
 		this.setEventCallbacks();
 		this.mode = undefined;
 		this.length = 10;
 	},
 
 	setEventCallbacks: function() {
+
+		this.canvasUpButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			this.canvas.moveUp();
+		}.bind(this));
+		this.canvasDownButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			this.canvas.moveDown();
+		}.bind(this));
+		this.canvasLeftButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			this.canvas.moveLeft();
+		}.bind(this));
+		this.canvasRightButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			this.canvas.moveRight();
+		}.bind(this));
+
 		this.playerButton.addEventListener("click", function(event) {
 			event.preventDefault();
 			this.mode = "player";
@@ -132,8 +157,8 @@ ClassMakerWrapper.prototype = {
 	setMouseCallback: function(canvasElement) {
 		canvasElement.addEventListener("mousemove", function(event) {
 			var canvasBox = canvasElement.getBoundingClientRect()
-			this.mouseX = event.clientX - canvasBox.left;
-			this.mouseY = event.clientY - canvasBox.top;
+			this.mouseX = event.clientX - canvasBox.left + this.canvas.getX();
+			this.mouseY = event.clientY - canvasBox.top + this.canvas.getY();
 			this.resetCursor();
 		}.bind(this));
 

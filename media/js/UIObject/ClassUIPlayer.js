@@ -59,8 +59,11 @@ ClassUIPlayer.prototype.move = function(platformList) {
 		this.y = collisions['y'];
 		if (collisions['landed']) {
 			this.landed = true;
+		} else {
+			this.landed = false;
 		}
 	} else {
+		this.landed = false;
 		this.vy = yValues['vy'];
 		this.y = yValues['y'];
 	}
@@ -137,9 +140,6 @@ ClassUIPlayer.prototype.__getCollisions = function(platformList, newX, newY) {
 				(
 					(newX <= platform.getX() + platform.getWidth()) && // the player's right will be to the left of the platform's right edge
 					(newX + this.width >= platform.getX()) // the player's left will be to the right of the platform's left edge
-				) || (
-					(this.x <= platform.getX() + platform.getWidth()) && // the player's right was to the left of the platform's right edge
-					(this.x + this.width >= platform.getX()) // the player's left was to the right of the platform's left edge			
 				)
 			) {
 				var vertCollisionReturn = this.__checkVertCollision(platform, newY);
@@ -156,9 +156,6 @@ ClassUIPlayer.prototype.__getCollisions = function(platformList, newX, newY) {
 				(
 					(newY + this.height >= platform.getY()) && // the player's feet will be below the platform's top
 					(newY <= platform.getY() + platform.getHeight()) // the player's head will be above the platform's bottom
-				) || (
-					(this.y + this.height >= platform.getY()) && // the player's feet was below the platform's top
-					(this.y <= platform.getY() + platform.getHeight()) // the player's head was above the platform's bottom
 				)
 			) {
 				var xCollisions = this.__checkHorizCollision(platform, newX);

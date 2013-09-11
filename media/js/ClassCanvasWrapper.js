@@ -14,7 +14,6 @@ ClassCanvasWrapper.prototype = {
 		this.xStep = Math.floor(this.width/100);
 		this.yStep = Math.floor(this.height/100);
 
-		console.log("x: " + this.x + " y: " + this.y + " height: " + this.height + " width: " + this.width);
 
 		if (options.setMouseCallback) {
 			options.setMouseCallback(this.canvasElement);

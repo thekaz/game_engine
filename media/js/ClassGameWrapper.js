@@ -81,7 +81,7 @@ ClassGameWrapper.prototype = {
 		}
 		// right side of screen
 		if (this.player.getX() + this.player.getWidth() > this.canvas.getX() + this.canvas.getWidth() - this.xThresh) {
-			this.canvas.setX(this.player.getX() + this.xThresh);
+			this.canvas.setX(this.player.getX() + this.player.getWidth() - this.canvas.getWidth() + this.xThresh);
 		}
 		// top of screen
 		if (this.player.getY() < this.canvas.getY() + this.yThresh) {
@@ -89,7 +89,7 @@ ClassGameWrapper.prototype = {
 		}
 		// bottom of screen
 		if (this.player.getY() + this.player.getHeight() > this.canvas.getY() + this.canvas.getHeight() - this.yThresh) {
-			this.canvas.setY(this.player.getY() + this.yThresh);
+			this.canvas.setY(this.player.getY() + this.player.getHeight() - this.canvas.getHeight() + this.yThresh);
 		}
 
 		this.canvas.canvasRefresh([this.platforms], [this.player]);

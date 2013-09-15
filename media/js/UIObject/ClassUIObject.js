@@ -9,6 +9,7 @@ ClassUIObject.prototype = {
 		this.width = options.width;
 		this.height = options.height;
 		this.color = options.color;
+		this.drawer = options.drawer;
 	},
 	getX: function() {
 		return this.x;
@@ -29,10 +30,16 @@ ClassUIObject.prototype = {
 		var returnObj = {};
 		var keys = Object.keys(this);
 		for (var i=0; i<keys.length; i++) {
+			if (key == 'drawer') {
+				continue;
+			}
 			key = keys[i];
 			value = this[key];
 			returnObj[key] = value;
 		}
 		return returnObj;
-	}
+	},
+	draw: function() {
+		this.drawer.draw(this);
+	}	
 };

@@ -1,8 +1,8 @@
-ClassApiWrapper = function(options) {
+ClassApi = function(options) {
 	this.init(options);
 }
 
-ClassApiWrapper.prototype = {
+ClassApi.prototype = {
 	init: function(options) {
 		if (!options) {
 			options = {};

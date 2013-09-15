@@ -1,8 +1,8 @@
-function ClassCanvasWrapper (options) {
+function ClassCanvas (options) {
 	this.init(options);
 }
 
-ClassCanvasWrapper.prototype = {
+ClassCanvas.prototype = {
 	init: function(options) {
 		var canvasId = options.canvasId;
 		this.canvasElement = document.getElementById(canvasId);
@@ -27,7 +27,7 @@ ClassCanvasWrapper.prototype = {
 			if (listItems[j]) {
 				for (var i=0; i < list.length; i++) {
 					if (list[i]) {
-						this.redrawObject(list[i]);
+						list[i].draw();
 					}
 				}
 			}
@@ -35,24 +35,12 @@ ClassCanvasWrapper.prototype = {
 
 		for (var k=0; k < singleItems.length; k++) {
 			if (singleItems[k]) {
-				this.redrawObject(singleItems[k]);
+				singleItems[k].draw();
 			}
 		}
 
 	},
 
-	redrawObject: function(uiObject) {
-		// make sure the object is visible on the canvas before drawing
-		if (
-			(uiObject.getX() + uiObject.getWidth() > this.x) ||
-			(uiObject.getX() < this.x + this.width) ||
-			(uiObject.getY() + uiObject.getHeight() > this.y) ||
-			(uiObject.getY() < this.y + this.height)
-		) {
-			this.ctx.fillStyle = uiObject.getColor();
-			this.ctx.fillRect(uiObject.getX() - this.x, uiObject.getY() - this.y, uiObject.getWidth(), uiObject.getHeight());
-		}
-	},
 	moveUp: function() {
 		this.y -= this.yStep;
 	},

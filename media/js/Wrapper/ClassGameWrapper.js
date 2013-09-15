@@ -23,15 +23,17 @@ ClassGameWrapper.prototype = {
 		}
 
 		this.keyboardManager = new ClassKeyboardManager();
-		this.canvas = new ClassCanvasWrapper(options);
+		this.canvas = new ClassCanvas(options);
 		this.xThresh = Math.floor(this.canvas.getWidth()/3);
 		this.yThresh = Math.floor(this.canvas.getHeight()/3);
 		this.platforms = [];
 		this.player = undefined;
 
+		this.drawer = new ClassDrawSimple(this.canvas);
+
 		if (options.online == true) {
-			this.apiWrapper = new ClassApiWrapper();
-			this.apiWrapper.sendLoad(this.loadCallback.bind(this));
+			this.api= new ClassApi();
+			this.api.sendLoad(this.loadCallback.bind(this));
 		} else {
 			this.timer.start();
 		}
@@ -40,18 +42,22 @@ ClassGameWrapper.prototype = {
 		var resultJson = JSON.parse(responseText);
 		if (resultJson.player) {
 			var options = resultJson.player;
+			options.drawer = this.drawer;
 			this.player = new ClassUIPlayer(options);
 		}
 		for (var i=0; i<resultJson.horiz_platforms.length; i++) {
 			var options = resultJson.horiz_platforms[i];
+			options.drawer = this.drawer;
 			this.platforms.push(new ClassUIHorizPlatform(options));
 		}
 		for (var i=0; i<resultJson.verti_platforms.length; i++) {
 			var options = resultJson.verti_platforms[i];
+			options.drawer = this.drawer;
 			this.platforms.push(new ClassUIVertiPlatform(options));
 		}
 		for (var i=0; i<resultJson.boxes.length; i++) {
 			var options = resultJson.boxes[i];
+			options.drawer = this.drawer;
 			this.platforms.push(new ClassUIBox(options));
 		}
 		this.timer.start();

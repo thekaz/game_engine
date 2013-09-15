@@ -10,7 +10,7 @@ ClassMakerWrapper.prototype = {
 		});
 		this.timer.start();
 
-		this.apiWrapper = new ClassApiWrapper();
+		this.api = new ClassApi();
 
 		this.horiz_platforms = [];
 		this.verti_platforms = [];
@@ -18,7 +18,7 @@ ClassMakerWrapper.prototype = {
 		this.player = undefined;
 		this.cursorObj = undefined;
 		options.setMouseCallback = this.setMouseCallback.bind(this);
-		this.canvas = new ClassCanvasWrapper(options);
+		this.canvas = new ClassCanvas(options);
 		this.canvas.setXStep(Math.floor(this.canvas.getWidth()/10));
 		this.canvas.setYStep(Math.floor(this.canvas.getHeight()/10));
 		this.playerButton = options.add_player_button;
@@ -39,6 +39,8 @@ ClassMakerWrapper.prototype = {
 		this.setEventCallbacks();
 		this.mode = undefined;
 		this.length = 10;
+
+		this.drawer = new ClassDrawSimple(this.canvas);
 	},
 
 	setEventCallbacks: function() {
@@ -121,11 +123,11 @@ ClassMakerWrapper.prototype = {
 			if (this.player) {
 				saveObj.player = this.player.getParamsObj();
 			}
-			this.apiWrapper.sendSave(JSON.stringify(saveObj));
+			this.api.sendSave(JSON.stringify(saveObj));
 		}.bind(this));
 
 		this.loadButton.addEventListener("click", function(event) {
-			this.apiWrapper.sendLoad(this.sendLoadCallback.bind(this));
+			this.api.sendLoad(this.sendLoadCallback.bind(this));
 		}.bind(this));
 	},
 
@@ -138,18 +140,22 @@ ClassMakerWrapper.prototype = {
 		this.cursorObj = undefined;
 		if (resultJson.player) {
 			var options = resultJson.player;
+			options.drawer = this.drawer;
 			this.player = new ClassUIPlayer(options);
 		}
 		for (var i=0; i<resultJson.horiz_platforms.length; i++) {
 			var options = resultJson.horiz_platforms[i];
+			options.drawer = this.drawer;
 			this.horiz_platforms.push(new ClassUIHorizPlatform(options));
 		}
 		for (var i=0; i<resultJson.verti_platforms.length; i++) {
 			var options = resultJson.verti_platforms[i];
+			options.drawer = this.drawer;
 			this.verti_platforms.push(new ClassUIVertiPlatform(options));
 		}
 		for (var i=0; i<resultJson.boxes.length; i++) {
 			var options = resultJson.boxes[i];
+			options.drawer = this.drawer;
 			this.boxes.push(new ClassUIBox(options));
 		}
 	},
@@ -218,15 +224,15 @@ ClassMakerWrapper.prototype = {
 
 	resetCursor: function() {
 		if (this.mode == "player") {
-			this.cursorObj = new ClassUIPlayer({'x':this.mouseX-5, 'y':this.mouseY-5});
+			this.cursorObj = new ClassUIPlayer({'x':this.mouseX-5, 'y':this.mouseY-5, 'drawer':this.drawer});
 		} else if (this.mode == "horiz_platform") {
-			this.cursorObj = new ClassUIHorizPlatform({'x':this.mouseX-(this.length/2), 'y':this.mouseY-5, 'length':this.length});
+			this.cursorObj = new ClassUIHorizPlatform({'x':this.mouseX-(this.length/2), 'y':this.mouseY-5, 'length':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "verti_platform") {
-			this.cursorObj = new ClassUIVertiPlatform({'x':this.mouseX-5, 'y':this.mouseY-(this.length/2), 'length':this.length});
+			this.cursorObj = new ClassUIVertiPlatform({'x':this.mouseX-5, 'y':this.mouseY-(this.length/2), 'length':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "box") {
-			this.cursorObj = new ClassUIBox({'x':this.mouseX-(this.length/2), 'y':this.mouseY-(this.length/2), 'length':this.length});
+			this.cursorObj = new ClassUIBox({'x':this.mouseX-(this.length/2), 'y':this.mouseY-(this.length/2), 'length':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "delete") {
-			this.cursorObj = new ClassUIStatic({'x':this.mouseX-1, 'y':this.mouseY-1, 'height':3, 'width':3, 'color':"#000044"});
+			this.cursorObj = new ClassUIStatic({'x':this.mouseX-1, 'y':this.mouseY-1, 'height':3, 'width':3, 'color':"#000044", 'drawer':this.drawer});
 		}
 	},
 

@@ -18,11 +18,3 @@ ClassUIDynamic.prototype.init = function(options) {
 	this.frictionX = options.frictionX || 0;
 	this.frictionY = options.frictionY || 0;
 }
-
-ClassUIDynamic.prototype.getAX = function() {
-	return this.ax;
-}
-
-ClassUIDynamic.prototype.getAY = function() {
-	return this.ay;
-}

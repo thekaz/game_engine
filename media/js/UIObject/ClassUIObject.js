@@ -30,10 +30,10 @@ ClassUIObject.prototype = {
 		var returnObj = {};
 		var keys = Object.keys(this);
 		for (var i=0; i<keys.length; i++) {
+			key = keys[i];
 			if (key == 'drawer') {
 				continue;
 			}
-			key = keys[i];
 			value = this[key];
 			returnObj[key] = value;
 		}

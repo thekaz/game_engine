@@ -39,7 +39,8 @@ ClassMakerWrapper.prototype = {
 		this.setEventCallbacks();
 		this.mode = undefined;
 		this.length = 10;
-
+		
+		this.uiFactory = new UIObjectFactory(this.canvas);
 		this.drawer = new ClassDrawSimple(this.canvas);
 	},
 
@@ -145,18 +146,15 @@ ClassMakerWrapper.prototype = {
 		}
 		for (var i=0; i<resultJson.horiz_platforms.length; i++) {
 			var options = resultJson.horiz_platforms[i];
-			options.drawer = this.drawer;
-			this.horiz_platforms.push(new ClassUIHorizPlatform(options));
+			this.horiz_platforms.push(this.uiFactory.makeBasicHorizPlatform(options));
 		}
 		for (var i=0; i<resultJson.verti_platforms.length; i++) {
 			var options = resultJson.verti_platforms[i];
-			options.drawer = this.drawer;
-			this.verti_platforms.push(new ClassUIVertiPlatform(options));
+			this.verti_platforms.push(this.uiFactory.makeBasicVertiPlatform(options));
 		}
 		for (var i=0; i<resultJson.boxes.length; i++) {
 			var options = resultJson.boxes[i];
-			options.drawer = this.drawer;
-			this.boxes.push(new ClassUIBox(options));
+			this.boxes.push(this.uiFactory.makeBasicBox(options));
 		}
 	},
 
@@ -226,13 +224,13 @@ ClassMakerWrapper.prototype = {
 		if (this.mode == "player") {
 			this.cursorObj = new ClassUIPlayer({'x':this.mouseX-5, 'y':this.mouseY-5, 'drawer':this.drawer});
 		} else if (this.mode == "horiz_platform") {
-			this.cursorObj = new ClassUIHorizPlatform({'x':this.mouseX-(this.length/2), 'y':this.mouseY-5, 'length':this.length, 'drawer':this.drawer});
+			this.cursorObj = this.uiFactory.makeBasicHorizPlatform({'x':this.mouseX-(this.length/2), 'y':this.mouseY-5, 'width':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "verti_platform") {
-			this.cursorObj = new ClassUIVertiPlatform({'x':this.mouseX-5, 'y':this.mouseY-(this.length/2), 'length':this.length, 'drawer':this.drawer});
+			this.cursorObj = this.uiFactory.makeBasicVertiPlatform({'x':this.mouseX-5, 'y':this.mouseY-(this.length/2), 'height':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "box") {
-			this.cursorObj = new ClassUIBox({'x':this.mouseX-(this.length/2), 'y':this.mouseY-(this.length/2), 'length':this.length, 'drawer':this.drawer});
+			this.cursorObj = this.uiFactory.makeBasicBox({'x':this.mouseX-(this.length/2), 'y':this.mouseY-(this.length/2), 'width':this.length, 'height':this.length, 'drawer':this.drawer});
 		} else if (this.mode == "delete") {
-			this.cursorObj = new ClassUIStatic({'x':this.mouseX-1, 'y':this.mouseY-1, 'height':3, 'width':3, 'color':"#000044", 'drawer':this.drawer});
+			this.cursorObj = this.uiFactory.makeBasicStatic({'x':this.mouseX-1, 'y':this.mouseY-1, 'height':3, 'width':3, 'color':"#000044", 'drawer':this.drawer});
 		}
 	},
 

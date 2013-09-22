@@ -28,7 +28,7 @@ ClassGameWrapper.prototype = {
 		this.yThresh = Math.floor(this.canvas.getHeight()/3);
 		this.platforms = [];
 		this.player = undefined;
-
+		this.uiFactory = new UIObjectFactory(this.canvas);
 		this.drawer = new ClassDrawSimple(this.canvas);
 
 		if (options.online == true) {
@@ -47,18 +47,15 @@ ClassGameWrapper.prototype = {
 		}
 		for (var i=0; i<resultJson.horiz_platforms.length; i++) {
 			var options = resultJson.horiz_platforms[i];
-			options.drawer = this.drawer;
-			this.platforms.push(new ClassUIHorizPlatform(options));
+			this.platforms.push(this.uiFactory.makeBasicHorizPlatform(options));
 		}
 		for (var i=0; i<resultJson.verti_platforms.length; i++) {
 			var options = resultJson.verti_platforms[i];
-			options.drawer = this.drawer;
-			this.platforms.push(new ClassUIVertiPlatform(options));
+			this.platforms.push(this.uiFactory.makeBasicVertiPlatform(options));
 		}
 		for (var i=0; i<resultJson.boxes.length; i++) {
 			var options = resultJson.boxes[i];
-			options.drawer = this.drawer;
-			this.platforms.push(new ClassUIBox(options));
+			this.platforms.push(this.uiFactory.makeBasicBox(options));
 		}
 		this.timer.start();
 	},

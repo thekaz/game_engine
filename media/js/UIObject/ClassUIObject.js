@@ -10,6 +10,7 @@ ClassUIObject.prototype = {
 		this.height = options.height;
 		this.color = options.color;
 		this.drawer = options.drawer;
+		this.mover = options.mover;
 	},
 	getX: function() {
 		return this.x;
@@ -41,5 +42,24 @@ ClassUIObject.prototype = {
 	},
 	draw: function() {
 		this.drawer.draw(this);
-	}	
+	},
+	setHorizDirection: function(direction) {
+		if (this.mover) {
+			this.mover.setHorizDirection(direction);
+		}
+	},
+	startJump: function() {
+		if (this.mover) {
+			this.mover.startJump();
+		}
+	},
+	move: function(platformList) {
+		if (this.mover) {
+			this.mover.jump();
+			var moveResult = this.mover.move(this.x, this.y, this.height, this.width, platformList);
+			this.x = moveResult['x'];
+			this.y = moveResult['y'];
+		}
+	}
+
 };

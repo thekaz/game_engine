@@ -42,8 +42,7 @@ ClassGameWrapper.prototype = {
 		var resultJson = JSON.parse(responseText);
 		if (resultJson.player) {
 			var options = resultJson.player;
-			options.drawer = this.drawer;
-			this.player = new ClassUIPlayer(options);
+			this.player = this.uiFactory.makeBasicPlayer(options);
 		}
 		for (var i=0; i<resultJson.horiz_platforms.length; i++) {
 			var options = resultJson.horiz_platforms[i];

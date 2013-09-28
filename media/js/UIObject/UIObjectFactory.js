@@ -49,12 +49,7 @@ UIObjectFactory.prototype = {
 		return new ClassUIObject(newOptions);
 	},
 	makeBasicPlayer: function(options) {
-		var newOptions = {
-			x: options.x,
-			y: options.y,
-			width: 10,
-			height: 10,
-			color: "#00FF00",
+		var moverOptions = {
 			vx: 0,
 			vy: 0,
 			ax: 2,
@@ -62,7 +57,17 @@ UIObjectFactory.prototype = {
 			terminalX: 5,
 			terminalY: 50,
 			frictionX: 2,
-			frictionY: 0
+			frictionY: 0,
 		}
+		var newOptions = {
+			x: options.x,
+			y: options.y,
+			width: 10,
+			height: 10,
+			color: "#00FF00",
+			drawer: this.simpleDrawer,
+			mover: new ClassMotion(moverOptions)
+		}
+	return new ClassUIObject(newOptions);
 	}
 };

@@ -11,6 +11,10 @@ window.addEventListener("load", function () {
 		'delete_button':document.getElementById("delete"),
 		'length_field':document.getElementById("length_field"),
 		'save_button':document.getElementById("save_button"),
-		'load_button':document.getElementById("load_button")
+		'load_button':document.getElementById("load_button"),
+		'add_img_box':document.getElementById("add_img_block"),
+		'add_img_player':document.getElementById("add_img_player"),
+		'box_img':document.getElementById('block_img'),
+		'player_img':document.getElementById('player_img'),
 	});
 });

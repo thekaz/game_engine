@@ -1,6 +1,7 @@
 function UIObjectFactory(canvas) {
 	this.canvas = canvas;
 	this.simpleDrawer = new ClassDrawSimple(this.canvas);
+	this.imgDrawer = new ClassDrawImg(this.canvas);
 };
 
 UIObjectFactory.prototype = {
@@ -68,6 +69,39 @@ UIObjectFactory.prototype = {
 			drawer: this.simpleDrawer,
 			mover: new ClassMotion(moverOptions)
 		}
-	return new ClassUIObject(newOptions);
+		return new ClassUIObject(newOptions);
+	},
+	makeImgBox: function(options) {
+		var newOptions = {
+			x: options.x,
+			y: options.y,
+			width: options.width,
+			height: options.height,
+			drawer: this.imgDrawer,
+			element: options.element,
+		}
+		return new ClassUIObject(newOptions)
+	},
+	makeImgPlayer: function(options) {
+		var moverOptions = {
+			vx: 0,
+			vy: 0,
+			ax: 2,
+			ay: 1,
+			terminalX: 5,
+			terminalY: 50,
+			frictionX: 2,
+			frictionY: 0,
+		}
+		var newOptions = {
+			x: options.x,
+			y: options.y,
+			width: 40,
+			height: 80,
+			drawer: this.imgDrawer,
+			element: options.element,
+			mover: new ClassMotion(moverOptions),
+		}
+		return new ClassUIObject(newOptions);
 	}
 };

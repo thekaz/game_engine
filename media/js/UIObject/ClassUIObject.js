@@ -11,6 +11,7 @@ ClassUIObject.prototype = {
 		this.color = options.color;
 		this.drawer = options.drawer;
 		this.mover = options.mover;
+		this.element = options.element;
 	},
 	getX: function() {
 		return this.x;
